@@ -4,89 +4,77 @@ public class Calculator {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        double firstNumber, secondNumber, result = 0.0000000001;
+        double secondNumber, result;
         String operation;
-        boolean continueCalculating = true;
-        boolean choseOperation = false;
-        boolean choseContinueCalculating = false;
+        String answer = "y";
 
-        do {
-            if (result == 0.0000000001) {
-                System.out.println("Podaj pierwszą liczbę");
-                while (!scanner.hasNextDouble()) {
-                    System.out.println("Nieprawidłowe dane! Wpisz liczbę.");
-                    scanner.next();
-                }
-                firstNumber = scanner.nextDouble();
-            } else {
-                System.out.println("Poprzedni wynik: " + result);
-                firstNumber = result;
-            }
-            System.out.println("Podaj drugą liczbę");
+        System.out.println("Enter first number: ");
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Invalid input! Please enter a number.");
+            scanner.next();
+        }
+        result = scanner.nextDouble();
+
+        while (answer.equals("y")) {
+            System.out.println("Enter second number: ");
             while (!scanner.hasNextDouble()) {
-                System.out.println("Nieprawidłowe dane! Wpisz liczbę.");
+                System.out.println("Invalid input! Please enter a number.");
                 scanner.next();
             }
             secondNumber = scanner.nextDouble();
 
-            while (!choseOperation) {
-                System.out.println("Wybierz operację dodawania (+), odejmowania (-), mnożenia (*) lub dzielenia (/):");
-                operation = scanner.next();
+            System.out.println("Choose an operation: addition (+), subtraction (-), multiplication (*) or division (/): ");
+            operation = scanner.next();
 
-                switch (operation) {
-                    case "+":
-                        result = firstNumber + secondNumber;
-                        System.out.println("Wynik dodawania: " + result);
-                        choseOperation = true;
-                        break;
-                    case "-":
-                        result = firstNumber - secondNumber;
-                        System.out.println("Wynik odejmowania: " + result);
-                        choseOperation = true;
-                        break;
-                    case "*":
-                        result = firstNumber * secondNumber;
-                        System.out.println("Wynik mnożenia: " + result);
-                        choseOperation = true;
-                        break;
-                    case "/":
-                        while (secondNumber == 0) {
-                            System.out.println("Pamiętaj cholero, że nie można dzielić przez zero!");
-                            System.out.println("Podaj drugą liczbę");
-                            while (!scanner.hasNextDouble()) {
-                                System.out.println("Nieprawidłowe dane! Wpisz liczbę.");
-                                scanner.next();
-                            }
-                            secondNumber = scanner.nextDouble();
+            switch (operation) {
+                case "+":
+                    System.out.println(result + " " + "+" + " " + secondNumber + " " + "=" + " " + (result += secondNumber));
+                    break;
+                case "-":
+                    System.out.println(result + " " + "-" + " " + secondNumber + " " + "=" + " " + (result -= secondNumber));
+                    break;
+                case "*":
+                    System.out.println(result + " " + "*" + " " + secondNumber + " " + "=" + " " + (result *= secondNumber));
+                    break;
+                case "/":
+                    while (secondNumber == 0) {
+                        System.out.println("Remember that division by zero is not allowed!");
+                        System.out.println("Enter the second number: ");
+                        while (!scanner.hasNextDouble()) {
+                            System.out.println("Invalid input! Please enter a number.");
+                            scanner.next();
                         }
-                        result = firstNumber / secondNumber;
-                        System.out.println("Wynik dzielenia: " + result);
-                        choseOperation = true;
-                        break;
-                    default:
-                        System.out.println("Wybrano nieprawidłową operację.");
-                }
+                        secondNumber = scanner.nextDouble();
+                    }
+                    System.out.println(result + " " + "/" + " " + secondNumber + " " + "=" + " " + (result /= secondNumber));
+                    break;
+                default:
+                    System.out.println("Invalid operation selected.");
             }
-            choseOperation = false;
 
-            while (!choseContinueCalculating) {
-                System.out.println("Czy chcesz kontynuować obliczenia na uzyskanej liczbie? (tak/nie)");
-                String answer = scanner.next();
-                if (answer.equals("tak")) {
-                    continueCalculating = true;
-                    choseContinueCalculating = true;
-                } else if (answer.equals("nie")) {
-                    continueCalculating = false;
-                    choseContinueCalculating = true;
-                } else {
-                    System.out.println("Wybrano nieprawidłową odpowiedź.");
-                }
+            System.out.println("Do you want to continue calculations on the obtained number? (y/n)");
+            answer = scanner.next();
+            while (!answer.equals("y") && (!answer.equals("n"))) {
+                System.out.println("Invalid answer selected.");
+                answer = scanner.next();
             }
-            choseContinueCalculating = false;
+        }
+        System.out.println("Final result: " + result);
+    }
 
-        } while (continueCalculating);
+    public double add(double v1, double v2) {
+        return v1 + v2;
+    }
 
-        System.out.println("Wynik końcowy: " + result);
-        scanner.close();
+    public double substract(double v1, double v2) {
+        return v1 - v2;
+    }
+
+    public double multiply(double v1, double v2) {
+        return v1 * v2;
+    }
+
+    public double divide(double v1, double v2) {
+        return v1 / v2;
     }
 }
